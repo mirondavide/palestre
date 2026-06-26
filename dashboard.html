@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Palestre & Fitness</title>
+<style>
+:root{--giallo:#f5c518}
+body{font-family:system-ui,sans-serif;background:#0d0d0d;color:#e0e0e0;margin:0;padding:2rem}
+h1{margin:0 0 1.2rem;color:#fff}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.4rem;border-radius:999px;border:none;font-size:.82rem;font-weight:600;cursor:pointer;background:#1a1a1a;color:#888;transition:all .2s;letter-spacing:.03em}
+.tab-btn.active{background:var(--giallo);color:#0d0d0d}
+table{border-collapse:collapse;width:100%;background:#1a1a1a;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px -12px rgba(0,0,0,.6)}
+th,td{padding:.7rem 1rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.05);font-size:.88rem;vertical-align:top}
+th{background:#0d0d0d;color:rgba(255,255,255,.45);font-size:.73rem;text-transform:uppercase;letter-spacing:.07em}
+.muted{color:#888;font-size:.79rem}
+.tag{color:#fff;padding:.12rem .5rem;border-radius:999px;font-size:.7rem;font-weight:700}
+.b{display:inline-block;padding:.42rem .78rem;border-radius:999px;font-weight:600;font-size:.8rem;white-space:nowrap;margin:.1rem}
+.demo{background:#2a2a2a;color:#e0e0e0}
+.wa{background:#25d366;color:#fff}
+.em{background:#1a73e8;color:#fff}
+.inv-btn{padding:.38rem .72rem;border-radius:999px;font-size:.78rem;font-weight:600;border:none;cursor:pointer;background:#2a2a2a;color:#888;transition:background .15s}
+.inv-btn.sent{background:#14532d;color:#bbf7d0}
+tr.sent-row{opacity:.4}
+tr:hover{background:#222}
+.tab-row.hidden{display:none}
+.exp-btn{padding:.45rem 1.1rem;border-radius:999px;border:none;font-size:.78rem;font-weight:600;cursor:pointer;background:var(--giallo);color:#0d0d0d;margin-left:.5rem}
+.stats{display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap}
+.stat{background:#1a1a1a;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.5rem 1rem;font-size:.8rem;color:#888}
+.stat b{color:var(--giallo);font-size:1rem}
+.hidden{display:none}
+</style>
+</head><body>
+
+<h1>💪 Palestre &amp; Fitness — Parma
+<button class="exp-btn" onclick="esportaInviati()">⬇ Esporta inviati</button>
+<button class="exp-btn" onclick="importaInviati()">⬆ Importa inviati</button>
+</h1>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('gym',this)">
+    🏋️ Palestre &amp; CrossFit <span style="opacity:.6">(88)</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('pt',this)">
+    👤 Personal Trainer <span style="opacity:.6">(11)</span>
+  </button>
+</div>
+
+<div class="stats" id="stats-gym">
+  <div class="stat"><b>29</b><br>WhatsApp</div>
+  <div class="stat"><b>10</b><br>Email</div>
+  <div class="stat"><b>39</b><br>Totale</div>
+</div>
+<div class="stats hidden" id="stats-pt">
+  <div class="stat"><b>8</b><br>WhatsApp</div>
+  <div class="stat"><b>0</b><br>Email</div>
+  <div class="stat"><b>8</b><br>Totale</div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th><th>Nome</th><th>Sito attuale</th><th>Recensioni</th>
+      <th>Demo</th><th>Contatta</th><th>Stato</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="tab-row gym" id="r-gym-alezonicoach">
+<td>1</td>
+<td><b>Alezonicoach</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>35 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/alezonicoach/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393201538698?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Alezonicoach.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/alezonicoach/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-alezonicoach" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-project-2-0">
+<td>2</td>
+<td><b>Project 2.0</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>32 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/project-2-0/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393392731832?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Project%202.0.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/project-2-0/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-project-2-0" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-bodytech-spazio-wellness">
+<td>3</td>
+<td><b>Bodytech Spazio Wellness</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>24 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bodytech-spazio-wellness/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/3935545747?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Bodytech%20Spazio%20Wellness.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bodytech-spazio-wellness/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-bodytech-spazio-wellness" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-blue-zone-fitness-boutique">
+<td>4</td>
+<td><b>Blue Zone fitness boutique</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>10 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/blue-zone-fitness-boutique/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393791777295?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Blue%20Zone%20fitness.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/blue-zone-fitness-boutique/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-blue-zone-fitness-boutique" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-onnysquad-mma-parma">
+<td>5</td>
+<td><b>Onnysquad MMA Parma</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>8 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/onnysquad-mma-parma/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393494985780?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Onnysquad%20MMA%20Parma.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/onnysquad-mma-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-onnysquad-mma-parma" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-asd-phoenix-gym-figth-club">
+<td>6</td>
+<td><b>Asd Phoenix Gym &amp; Figth Club</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>3 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/asd-phoenix-gym-figth-club/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393292665956?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Phoenix%20Gym%20Figth.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/asd-phoenix-gym-figth-club/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-asd-phoenix-gym-figth-club" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-the-fit-suite">
+<td>7</td>
+<td><b>The Fit Suite</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>1 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/the-fit-suite/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393534239627?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20The%20Fit%20Suite.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/the-fit-suite/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-the-fit-suite" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fpm-studio">
+<td>8</td>
+<td><b>FPM Studio</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>1 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/fpm-studio/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393477429486?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20FPM%20Studio.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/fpm-studio/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-fpm-studio" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fc-wellness-coach">
+<td>9</td>
+<td><b>FC Wellness Coach</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>0 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/fc-wellness-coach/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393498475977?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20FC%20Wellness%20Coach.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/fc-wellness-coach/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-fc-wellness-coach" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-platinum-fitness-studio">
+<td>10</td>
+<td><b>Platinum fitness studio</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#ea580c">SITO MORTO</span><br><span class="muted">il sito non si apre</span></td>
+<td>146 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/platinum-fitness-studio/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393273598744?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20nuova%20del%20sito%20per%20Platinum%20fitness%20studio.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/platinum-fitness-studio/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-platinum-fitness-studio" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-gabriele-virgilio-fitness-coaching">
+<td>11</td>
+<td><b>Gabriele Virgilio Fitness Coaching</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#ea580c">SITO MORTO</span><br><span class="muted">il sito non si apre</span></td>
+<td>35 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/gabriele-virgilio-fitness-coaching/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393393696441?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20nuova%20del%20sito%20per%20Gabriele%20Virgilio%20Fitness.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/gabriele-virgilio-fitness-coaching/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-gabriele-virgilio-fitness-coaching" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-human-lab-parma">
+<td>12</td>
+<td><b>Human Lab Parma</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#ea580c">SITO MORTO</span><br><span class="muted">il sito non si apre</span></td>
+<td>31 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/human-lab-parma/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393755288708?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20nuova%20del%20sito%20per%20Human%20Lab%20Parma.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/human-lab-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-human-lab-parma" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-am-wellness-training-studio-di-maximilian-arcidiac">
+<td>13</td>
+<td><b>AM WELLNESS TRAINING STUDIO di Maximilian Arcidiaco</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#ea580c">SITO MORTO</span><br><span class="muted">il sito non si apre</span></td>
+<td>22 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/am-wellness-training-studio-di-maximilian-arcidiac/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393478822985?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20nuova%20del%20sito%20per%20AM%20WELLNESS%20TRAINING.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/am-wellness-training-studio-di-maximilian-arcidiac/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-am-wellness-training-studio-di-maximilian-arcidiac" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fitness-time-parma">
+<td>14</td>
+<td><b>Fitness Time Parma</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS, template economico</span></td>
+<td>258 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/fitness-time-parma/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393487337753?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Fitness%20Time%20Parma.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/fitness-time-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-fitness-time-parma" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-wellfit">
+<td>15</td>
+<td><b>Wellfit</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>252 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/wellfit/" target="_blank">Vedi sito</a></td>
+<td><a class="b em" href="mailto:info@wellfitparma.it?subject=Sito%20nuovo%20per%20Wellfit&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Wellfit.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/wellfit/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-wellfit" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-stone-temple">
+<td>16</td>
+<td><b>Stone Temple</b><br><span class="muted">Alberi PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>189 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/stone-temple/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393883628590?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Stone%20Temple.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/stone-temple/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-stone-temple" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-crossfit-parma">
+<td>17</td>
+<td><b>CrossFit Parma</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>137 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/crossfit-parma/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393203578706?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Parma.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/crossfit-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:info@crossfitparma.com?subject=Sito%20nuovo%20per%20Parma&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Parma.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/crossfit-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-crossfit-parma" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-palestra-super-gym">
+<td>18</td>
+<td><b>Palestra Super Gym</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>117 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/palestra-super-gym/" target="_blank">Vedi sito</a></td>
+<td><a class="b em" href="mailto:palestra.supergym@gmail.com?subject=Sito%20nuovo%20per%20Super%20Gym&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Super%20Gym.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/palestra-super-gym/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-palestra-super-gym" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fit-planet">
+<td>19</td>
+<td><b>Fit Planet</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>82 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/fit-planet/" target="_blank">Vedi sito</a></td>
+<td><a class="b em" href="mailto:palestrafitplanet@gmail.com?subject=Sito%20nuovo%20per%20Fit%20Planet&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Fit%20Planet.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/fit-planet/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-fit-planet" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-bodytec-parma">
+<td>20</td>
+<td><b>Bodytec Parma</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>77 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bodytec-parma/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393407630316?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Bodytec%20Parma.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bodytec-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:info@bodytecparma.it?subject=Sito%20nuovo%20per%20Bodytec%20Parma&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Bodytec%20Parma.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bodytec-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-bodytec-parma" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-jc-lab">
+<td>21</td>
+<td><b>JC LAB</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS, template economico</span></td>
+<td>71 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/jc-lab/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393472857981?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20JC%20LAB.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/jc-lab/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-jc-lab" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-cerbero-training-hub">
+<td>22</td>
+<td><b>Cerbero Training Hub</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>69 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/cerbero-training-hub/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393440161918?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Cerbero%20Training%20Hub.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/cerbero-training-hub/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-cerbero-training-hub" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-pilates-fitness-studio">
+<td>23</td>
+<td><b>Pilates Fitness Studio</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>66 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/pilates-fitness-studio/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393389252305?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Pilates%20Fitness%20Studio.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/pilates-fitness-studio/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:info@pilatesfitnessstudio.it?subject=Sito%20nuovo%20per%20Pilates%20Fitness%20Studio&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Pilates%20Fitness%20Studio.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/pilates-fitness-studio/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-pilates-fitness-studio" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-parma-powerlifting-gym-powerlifting-barbarians">
+<td>24</td>
+<td><b>Parma Powerlifting Gym - Powerlifting Barbarians</b><br><span class="muted">Baganzola PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>60 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/parma-powerlifting-gym-powerlifting-barbarians/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393476103128?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Parma%20Powerlifting%20Gym.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/parma-powerlifting-gym-powerlifting-barbarians/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-parma-powerlifting-gym-powerlifting-barbarians" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-the-roof-calisthenics-streetlifting">
+<td>25</td>
+<td><b>The Roof Calisthenics - Streetlifting</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">template economico</span></td>
+<td>41 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/the-roof-calisthenics-streetlifting/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393784215265?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20The%20Roof%20Calisthenics.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/the-roof-calisthenics-streetlifting/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-the-roof-calisthenics-streetlifting" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-allenamento-sequenziale">
+<td>26</td>
+<td><b>Allenamento Sequenziale</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>38 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/allenamento-sequenziale/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393898711091?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Allenamento%20Sequenziale.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/allenamento-sequenziale/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:assistenza@evoluzionecommerce.it?subject=Sito%20nuovo%20per%20Allenamento%20Sequenziale&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Allenamento%20Sequenziale.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/allenamento-sequenziale/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-allenamento-sequenziale" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-associazione-sportiva-dilettantistica-namaste">
+<td>27</td>
+<td><b>Associazione Sportiva Dilettantistica Namaste</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS, copyright 2015</span></td>
+<td>31 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/associazione-sportiva-dilettantistica-namaste/" target="_blank">Vedi sito</a></td>
+<td><a class="b em" href="mailto:info.namastepr@gmail.com?subject=Sito%20nuovo%20per%20Dilettantistica%20Namaste&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Dilettantistica%20Namaste.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/associazione-sportiva-dilettantistica-namaste/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-associazione-sportiva-dilettantistica-namaste" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-centro-biodynamic-wellness">
+<td>28</td>
+<td><b>Centro Biodynamic Wellness</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>29 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/centro-biodynamic-wellness/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393275223474?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Centro%20Biodynamic%20Wellness.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/centro-biodynamic-wellness/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-centro-biodynamic-wellness" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-body-impact-ac-universe">
+<td>29</td>
+<td><b>BODY IMPACT AC UNIVERSE</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>27 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/body-impact-ac-universe/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393454133553?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20BODY%20IMPACT%20AC.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/body-impact-ac-universe/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-body-impact-ac-universe" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-essere-rivoluzione-del-fitness">
+<td>30</td>
+<td><b>Essere Rivoluzione del Fitness</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>15 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/essere-rivoluzione-del-fitness/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393205623897?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Essere%20Rivoluzione%20del.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/essere-rivoluzione-del-fitness/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-essere-rivoluzione-del-fitness" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-dott-fabrizio-faelli-postura-e-preparazione-fisica">
+<td>31</td>
+<td><b>Dott. Fabrizio Faelli - Postura e Preparazione fisica</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS, non adatto al telefono</span></td>
+<td>5 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/dott-fabrizio-faelli-postura-e-preparazione-fisica/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393441330178?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Dott.%20Fabrizio%20Faelli.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/dott-fabrizio-faelli-postura-e-preparazione-fisica/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:fabriziofaelli@gmail.com?subject=Sito%20nuovo%20per%20Dott.%20Fabrizio%20Faelli&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Dott.%20Fabrizio%20Faelli.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/dott-fabrizio-faelli-postura-e-preparazione-fisica/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-dott-fabrizio-faelli-postura-e-preparazione-fisica" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-studio-happybody-di-raffaello-cantarelli">
+<td>32</td>
+<td><b>Studio Happybody di Raffaello Cantarelli</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>3 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/studio-happybody-di-raffaello-cantarelli/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393487364915?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Studio%20Happybody%20di.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/studio-happybody-di-raffaello-cantarelli/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:raffaello.cantarelli@gmail.com?subject=Sito%20nuovo%20per%20Studio%20Happybody%20di&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Studio%20Happybody%20di.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/studio-happybody-di-raffaello-cantarelli/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-studio-happybody-di-raffaello-cantarelli" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fitness-time-parma-est">
+<td>33</td>
+<td><b>FITNESS TIME PARMA EST</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">template economico</span></td>
+<td>0 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/fitness-time-parma-est/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393487337753?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20FITNESS%20TIME%20PARMA.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/fitness-time-parma-est/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-fitness-time-parma-est" onclick="tog(this)">○ Da inviare</button></td>
+</tr>
+    <tr class="tab-row pt" id="r-pt-elena-bonazzi-chinesiologa-personal-trainer">
+<td>1</td>
+<td><b>Elena Bonazzi Chinesiologa / Personal Trainer</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>52 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/elena-bonazzi-chinesiologa-personal-trainer/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393407312788?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Elena%20Bonazzi%20Chinesiologa.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/elena-bonazzi-chinesiologa-personal-trainer/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-elena-bonazzi-chinesiologa-personal-trainer" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-ab-studio-parma-nutrizione-massoterapia-chinesiolo">
+<td>2</td>
+<td><b>AB STUDIO PARMA - Nutrizione, Massoterapia, Chinesiologia, Personal training</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>48 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/ab-studio-parma-nutrizione-massoterapia-chinesiolo/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393495469245?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20AB%20STUDIO%20PARMA.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/ab-studio-parma-nutrizione-massoterapia-chinesiolo/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-ab-studio-parma-nutrizione-massoterapia-chinesiolo" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-db-personal-training-studio">
+<td>3</td>
+<td><b>DB Personal Training Studio</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>22 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/db-personal-training-studio/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393497529439?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20DB%20Personal%20Training.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/db-personal-training-studio/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-db-personal-training-studio" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-allegra-prina-personal-trainer-parma">
+<td>4</td>
+<td><b>Allegra Prina - Personal Trainer Parma</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>16 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/allegra-prina-personal-trainer-parma/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393427789887?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Allegra%20Prina%20Personal.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/allegra-prina-personal-trainer-parma/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-allegra-prina-personal-trainer-parma" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-dandept-studio">
+<td>5</td>
+<td><b>DandePT Studio</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>2 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/dandept-studio/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393473307031?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20DandePT%20Studio.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/dandept-studio/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-dandept-studio" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-personal-trainer-giulia-tosi">
+<td>6</td>
+<td><b>Personal Trainer Giulia Tosi</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>0 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/personal-trainer-giulia-tosi/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393479506799?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Personal%20Trainer%20Giulia.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/personal-trainer-giulia-tosi/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-personal-trainer-giulia-tosi" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-dynamo-performance-personal-training-strength-cond">
+<td>7</td>
+<td><b>DYNAMO PERFORMANCE // Personal Training, Strength &amp; Conditioning🏋️‍♂️ Parma</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>0 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/dynamo-performance-personal-training-strength-cond/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393476704773?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20DYNAMO%20PERFORMANCE%20Personal.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/dynamo-performance-personal-training-strength-cond/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-dynamo-performance-personal-training-strength-cond" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-dott-marco-de-ruvo-biologo-nutrizionista-personal-">
+<td>8</td>
+<td><b>Dott. Marco De Ruvo (Biologo Nutrizionista - Personal Trainer)</b><br><span class="muted">Parma PR</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>61 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/dott-marco-de-ruvo-biologo-nutrizionista-personal-/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393281426345?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Dott.%20Marco%20De.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/dott-marco-de-ruvo-biologo-nutrizionista-personal-/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-dott-marco-de-ruvo-biologo-nutrizionista-personal-" onclick="tog(this)">○ Da inviare</button></td>
+</tr>
+  </tbody>
+</table>
+
+<p style="margin-top:1.2rem;font-size:.78rem;color:#888">Invia i messaggi a mano, uno alla volta. Niente invii automatici.</p>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-row').forEach(r => r.classList.add('hidden'));
+  document.querySelectorAll('.tab-row.'+id).forEach(r => r.classList.remove('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.stats').forEach(s => s.classList.add('hidden'));
+  document.getElementById('stats-'+id).classList.remove('hidden');
+  localStorage.setItem('dash_gym_tab', id);
+}
+
+function importaInviati(){
+  var input=document.createElement('input');
+  input.type='file';input.accept='.json';
+  input.onchange=function(e){
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      var slugs=JSON.parse(ev.target.result);
+      var data=get();
+      slugs.forEach(function(s){data[s]=true;});
+      localStorage.setItem('inv_gym',JSON.stringify(data));
+      location.reload();
+    };
+    reader.readAsText(e.target.files[0]);
+  };
+  input.click();
+}
+
+function esportaInviati() {
+  var s = get();
+  var lista = Object.keys(s).filter(k => s[k]);
+  var blob = new Blob([JSON.stringify(lista, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '_inviati.json';
+  a.click();
+  alert('Salva il file _inviati.json nella cartella palestre/ del progetto.');
+}
+
+function tog(btn) {
+  var k=btn.dataset.key, s=get(); s[k]=!s[k];
+  localStorage.setItem('inv_gym', JSON.stringify(s));
+  applyBtn(btn, s[k]);
+}
+
+function get() { return JSON.parse(localStorage.getItem('inv_gym')||'{}'); }
+
+function applyBtn(btn, v) {
+  btn.textContent = v ? '✅ Inviato' : '○ Da inviare';
+  btn.classList.toggle('sent', v);
+  btn.closest('tr').classList.toggle('sent-row', v);
+}
+
+window.onload = function() {
+  var s = get();
+  document.querySelectorAll('.inv-btn').forEach(b => { if(s[b.dataset.key]) applyBtn(b,true); });
+  var saved = localStorage.getItem('dash_gym_tab');
+  if (saved) {
+    var btn = document.querySelector('.tab-btn[onclick*="\'' + saved + '\'"]');
+    if (btn) showTab(saved, btn);
+  } else {
+    document.querySelectorAll('.tab-row.pt').forEach(r => r.classList.add('hidden'));
+  }
+};
+</script>
+</body></html>
