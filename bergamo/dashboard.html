@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Palestre & Fitness</title>
+<style>
+:root{--giallo:#f5c518}
+body{font-family:system-ui,sans-serif;background:#0d0d0d;color:#e0e0e0;margin:0;padding:2rem}
+h1{margin:0 0 1.2rem;color:#fff}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.4rem;border-radius:999px;border:none;font-size:.82rem;font-weight:600;cursor:pointer;background:#1a1a1a;color:#888;transition:all .2s;letter-spacing:.03em}
+.tab-btn.active{background:var(--giallo);color:#0d0d0d}
+table{border-collapse:collapse;width:100%;background:#1a1a1a;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px -12px rgba(0,0,0,.6)}
+th,td{padding:.7rem 1rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.05);font-size:.88rem;vertical-align:top}
+th{background:#0d0d0d;color:rgba(255,255,255,.45);font-size:.73rem;text-transform:uppercase;letter-spacing:.07em}
+.muted{color:#888;font-size:.79rem}
+.tag{color:#fff;padding:.12rem .5rem;border-radius:999px;font-size:.7rem;font-weight:700}
+.b{display:inline-block;padding:.42rem .78rem;border-radius:999px;font-weight:600;font-size:.8rem;white-space:nowrap;margin:.1rem}
+.demo{background:#2a2a2a;color:#e0e0e0}
+.wa{background:#25d366;color:#fff}
+.em{background:#1a73e8;color:#fff}
+.inv-btn{padding:.38rem .72rem;border-radius:999px;font-size:.78rem;font-weight:600;border:none;cursor:pointer;background:#2a2a2a;color:#888;transition:background .15s}
+.inv-btn.sent{background:#14532d;color:#bbf7d0}
+tr.sent-row{opacity:.4}
+tr:hover{background:#222}
+.tab-row.hidden{display:none}
+.exp-btn{padding:.45rem 1.1rem;border-radius:999px;border:none;font-size:.78rem;font-weight:600;cursor:pointer;background:var(--giallo);color:#0d0d0d;margin-left:.5rem}
+.stats{display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap}
+.stat{background:#1a1a1a;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.5rem 1rem;font-size:.8rem;color:#888}
+.stat b{color:var(--giallo);font-size:1rem}
+.hidden{display:none}
+</style>
+</head><body>
+
+<h1>💪 Palestre &amp; Fitness — Parma
+<button class="exp-btn" onclick="esportaInviati()">⬇ Esporta inviati</button>
+<button class="exp-btn" onclick="importaInviati()">⬆ Importa inviati</button>
+</h1>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('gym',this)">
+    🏋️ Palestre &amp; CrossFit <span style="opacity:.6">(49)</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('pt',this)">
+    👤 Personal Trainer <span style="opacity:.6">(16)</span>
+  </button>
+</div>
+
+<div class="stats" id="stats-gym">
+  <div class="stat"><b>15</b><br>WhatsApp</div>
+  <div class="stat"><b>2</b><br>Email</div>
+  <div class="stat"><b>17</b><br>Totale</div>
+</div>
+<div class="stats hidden" id="stats-pt">
+  <div class="stat"><b>8</b><br>WhatsApp</div>
+  <div class="stat"><b>1</b><br>Email</div>
+  <div class="stat"><b>9</b><br>Totale</div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th><th>Nome</th><th>Sito attuale</th><th>Recensioni</th>
+      <th>Demo</th><th>Contatta</th><th>Stato</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="tab-row gym" id="r-gym-ultimate-fitness-bergamo">
+<td>1</td>
+<td><b>Ultimate Fitness Bergamo</b><br><span class="muted">Seriate BG</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>142 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/ultimate-fitness-bergamo/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393756675332?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Ultimate%20Fitness%20Bergamo.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/ultimate-fitness-bergamo/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-ultimate-fitness-bergamo" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-oaza-club">
+<td>2</td>
+<td><b>OAZA CLUB</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>50 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/oaza-club/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393294133160?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20OAZA%20CLUB.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/oaza-club/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-oaza-club" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-md-studio">
+<td>3</td>
+<td><b>MD Studio</b><br><span class="muted">Albano Sant&#x27;Alessandro BG</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>46 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/md-studio/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393391668888?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20MD%20Studio.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/md-studio/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-md-studio" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-andrea-perico-wellness-coach">
+<td>4</td>
+<td><b>Andrea Perico Wellness Coach</b><br><span class="muted">Treviolo BG</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>38 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/andrea-perico-wellness-coach/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393338216777?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Andrea%20Perico%20Wellness.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/andrea-perico-wellness-coach/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-andrea-perico-wellness-coach" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-grifon-personal-coach">
+<td>5</td>
+<td><b>GriFon - Personal Coach</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>20 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/grifon-personal-coach/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393450210488?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20GriFon%20Personal%20Coach.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/grifon-personal-coach/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-grifon-personal-coach" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-dimagrimento-tonificazione-postura-neurofitness-pa">
+<td>6</td>
+<td><b>Dimagrimento-Tonificazione, Postura-NeuroFitness-Pavimento pelvico - STUDIO di Meghy Makovetta</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#ea580c">SITO MORTO</span><br><span class="muted">il sito non si apre</span></td>
+<td>27 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/dimagrimento-tonificazione-postura-neurofitness-pa/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393519205232?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20nuova%20del%20sito%20per%20Dimagrimento-Tonificazione%2C%20Postura-NeuroFitness-Pavimento%20pelvico.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/dimagrimento-tonificazione-postura-neurofitness-pa/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-dimagrimento-tonificazione-postura-neurofitness-pa" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-greentheory-curno">
+<td>7</td>
+<td><b>GreenTheory Curno</b><br><span class="muted">Curno BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>756 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/greentheory-curno/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/3935821527?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20GreenTheory%20Curno.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/greentheory-curno/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-greentheory-curno" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fitness-crossfit-begin">
+<td>8</td>
+<td><b>Fitness CrossFit Begin</b><br><span class="muted">Pedrengo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>264 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/fitness-crossfit-begin/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393280391566?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Fitness%20CrossFit%20Begin.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/fitness-crossfit-begin/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-fitness-crossfit-begin" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-venkon-gym">
+<td>9</td>
+<td><b>Venkon Gym</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>150 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/venkon-gym/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393896166028?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Venkon%20Gym.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/venkon-gym/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-venkon-gym" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-b-free-fitness-club">
+<td>10</td>
+<td><b>B-Free Fitness Club</b><br><span class="muted">Alzano Lombardo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>80 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/b-free-fitness-club/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393803708752?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20B-Free%20Fitness%20Club.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/b-free-fitness-club/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-b-free-fitness-club" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fitness-training-elitez-dott-ssa-elena-zanga">
+<td>11</td>
+<td><b>Fitness Training EliteZ - Dott.ssa Elena Zanga</b><br><span class="muted">Albano Sant&#x27;Alessandro BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS, template economico</span></td>
+<td>78 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/fitness-training-elitez-dott-ssa-elena-zanga/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393400624323?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Fitness%20Training%20EliteZ.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/fitness-training-elitez-dott-ssa-elena-zanga/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-fitness-training-elitez-dott-ssa-elena-zanga" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-crossfit-brembo-asd">
+<td>12</td>
+<td><b>CrossFit Brembo asd</b><br><span class="muted">Almè BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>57 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/crossfit-brembo-asd/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393384655943?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Brembo%20asd.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/crossfit-brembo-asd/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-crossfit-brembo-asd" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-orobica-training-center">
+<td>13</td>
+<td><b>Orobica Training Center</b><br><span class="muted">Brembate di Sopra BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>57 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/orobica-training-center/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393518281268?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Orobica%20Training%20Center.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/orobica-training-center/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:info@orobicatrainingcenter.it?subject=Sito%20nuovo%20per%20Orobica%20Training%20Center&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Orobica%20Training%20Center.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/orobica-training-center/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-orobica-training-center" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-fit-home-di-alessandra-filippone">
+<td>14</td>
+<td><b>FIT-HOME di Alessandra Filippone</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>25 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/fit-home-di-alessandra-filippone/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393485407560?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20FIT-HOME%20di%20Alessandra.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/fit-home-di-alessandra-filippone/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:utente@dominio.com?subject=Sito%20nuovo%20per%20FIT-HOME%20di%20Alessandra&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20FIT-HOME%20di%20Alessandra.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/fit-home-di-alessandra-filippone/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="gym-fit-home-di-alessandra-filippone" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row gym" id="r-gym-mibe-space">
+<td>15</td>
+<td><b>MIBE SPACE</b><br><span class="muted">Osio Sotto BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>25 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/mibe-space/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393755029113?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20MIBE%20SPACE.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/mibe-space/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="gym-mibe-space" onclick="tog(this)">○ Da inviare</button></td>
+</tr>
+    <tr class="tab-row pt" id="r-pt-cristian-filippone-personal-trainer">
+<td>1</td>
+<td><b>Cristian Filippone - Personal Trainer</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#dc2626">SENZA SITO</span><br><span class="muted">nessun sito</span></td>
+<td>21 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/cristian-filippone-personal-trainer/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393282679987?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20creato%20un%20sito%20da%20zero%20per%20Cristian%20Filippone%20Personal.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/cristian-filippone-personal-trainer/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-cristian-filippone-personal-trainer" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-enrico-cassia-osteopata-e-personal-trainer">
+<td>2</td>
+<td><b>Enrico Cassia - Osteopata e Personal Trainer</b><br><span class="muted">Stezzano BG</span></td>
+<td><span class="tag" style="background:#ea580c">SITO MORTO</span><br><span class="muted">il sito non si apre</span></td>
+<td>36 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/enrico-cassia-osteopata-e-personal-trainer/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393472581768?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20nuova%20del%20sito%20per%20Enrico%20Cassia%20Osteopata.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/enrico-cassia-osteopata-e-personal-trainer/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-enrico-cassia-osteopata-e-personal-trainer" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-bergamo-personal-trainer-di-gabriele-gualandris">
+<td>3</td>
+<td><b>Bergamo personal trainer (Di Gabriele Gualandris)</b><br><span class="muted">Nuova Betosca BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>145 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/bergamo-personal-trainer-di-gabriele-gualandris/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393487365440?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Bergamo%20personal%20trainer.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/bergamo-personal-trainer-di-gabriele-gualandris/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-bergamo-personal-trainer-di-gabriele-gualandris" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-coachtm-di-marco-tavola-personal-training-small-gr">
+<td>4</td>
+<td><b>CoachTM di Marco Tavola - Personal Training, Small Group, Nutrizione, Fisioterapia, Osteopatia, Massoterapia, Psicologia</b><br><span class="muted">Almenno San Bartolomeo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS, template economico</span></td>
+<td>113 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/coachtm-di-marco-tavola-personal-training-small-gr/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393278767619?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20CoachTM%20di%20Marco.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/coachtm-di-marco-tavola-personal-training-small-gr/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-coachtm-di-marco-tavola-personal-training-small-gr" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-studio-personal-training-never-give-up">
+<td>5</td>
+<td><b>Studio Personal Training Never Give Up</b><br><span class="muted">Treviolo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>55 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/studio-personal-training-never-give-up/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393314641164?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Studio%20Personal%20Training.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/studio-personal-training-never-give-up/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-studio-personal-training-never-give-up" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-dott-dante-arrigoni-dietista-personal-trainer">
+<td>6</td>
+<td><b>Dott. Dante Arrigoni Dietista- Personal Trainer</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>41 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/dott-dante-arrigoni-dietista-personal-trainer/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393388801763?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Dott.%20Dante%20Arrigoni.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/dott-dante-arrigoni-dietista-personal-trainer/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-dott-dante-arrigoni-dietista-personal-trainer" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-stefano-invernizzi-personal-trainer-bergamo">
+<td>7</td>
+<td><b>Stefano Invernizzi - Personal Trainer Bergamo</b><br><span class="muted">Ponte San Pietro BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>33 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/stefano-invernizzi-personal-trainer-bergamo/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393296678458?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20Stefano%20Invernizzi%20Personal.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/stefano-invernizzi-personal-trainer-bergamo/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a></td>
+<td><button class="inv-btn" data-key="pt-stefano-invernizzi-personal-trainer-bergamo" onclick="tog(this)">○ Da inviare</button></td>
+</tr><tr class="tab-row pt" id="r-pt-plm-fit-bergamo-studio-di-personal-training">
+<td>8</td>
+<td><b>PLM FIT Bergamo - Studio di personal training</b><br><span class="muted">Bergamo BG</span></td>
+<td><span class="tag" style="background:#d97706">SITO VECCHIO</span><br><span class="muted">no HTTPS</span></td>
+<td>29 ⭐</td>
+<td><a class="b demo" href="https://mirondavide.com/palestre/bergamo/plm-fit-bergamo-studio-di-personal-training/" target="_blank">Vedi sito</a></td>
+<td><a class="b wa" href="https://wa.me/393463378510?text=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20PLM%20FIT%20Bergamo.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/plm-fit-bergamo-studio-di-personal-training/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Prezzo%20da%20%E2%82%AC500%2C%20consegna%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196" target="_blank">📲 WhatsApp</a> <a class="b em" href="mailto:info@plm.fit?subject=Sito%20nuovo%20per%20PLM%20FIT%20Bergamo&amp;body=Buongiorno%2C%0A%0Ami%20chiamo%20Davide%2C%20realizzo%20siti%20web%20per%20attivit%C3%A0%20locali.%0AHo%20preparato%20una%20versione%20pi%C3%B9%20moderna%20del%20sito%20per%20PLM%20FIT%20Bergamo.%0AEccolo%3A%20https%3A//mirondavide.com/palestre/bergamo/plm-fit-bergamo-studio-di-personal-training/%0A%0ALavoro%20da%20solo%20%E2%80%94%20niente%20agenzie.%20Il%20prezzo%20parte%20da%20%E2%82%AC500%20per%20una%20homepage%20completa%2C%20consegnata%20in%2072%20ore.%0A%0ASe%20vi%20interessa%2C%20possiamo%20sentirci%2010%20minuti%20%E2%80%94%20anche%20al%20telefono%20o%20passo%20di%20persona.%0A%0AUn%20saluto%2C%0ADavide%20%E2%80%94%20379%20210%206196%0A%0A---%0APer%20non%20ricevere%20altri%20messaggi%3A%20rispondete%20%27rimuovi%27.">📧 Email</a></td>
+<td><button class="inv-btn" data-key="pt-plm-fit-bergamo-studio-di-personal-training" onclick="tog(this)">○ Da inviare</button></td>
+</tr>
+  </tbody>
+</table>
+
+<p style="margin-top:1.2rem;font-size:.78rem;color:#888">Invia i messaggi a mano, uno alla volta. Niente invii automatici.</p>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-row').forEach(r => r.classList.add('hidden'));
+  document.querySelectorAll('.tab-row.'+id).forEach(r => r.classList.remove('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.stats').forEach(s => s.classList.add('hidden'));
+  document.getElementById('stats-'+id).classList.remove('hidden');
+  localStorage.setItem('dash_gym_tab', id);
+}
+
+function importaInviati(){
+  var input=document.createElement('input');
+  input.type='file';input.accept='.json';
+  input.onchange=function(e){
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      var slugs=JSON.parse(ev.target.result);
+      var data=get();
+      slugs.forEach(function(s){data[s]=true;});
+      localStorage.setItem('inv_gym',JSON.stringify(data));
+      location.reload();
+    };
+    reader.readAsText(e.target.files[0]);
+  };
+  input.click();
+}
+
+function esportaInviati() {
+  var s = get();
+  var lista = Object.keys(s).filter(k => s[k]);
+  var blob = new Blob([JSON.stringify(lista, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '_inviati.json';
+  a.click();
+  alert('Salva il file _inviati.json nella cartella palestre/ del progetto.');
+}
+
+function tog(btn) {
+  var k=btn.dataset.key, s=get(); s[k]=!s[k];
+  localStorage.setItem('inv_gym', JSON.stringify(s));
+  applyBtn(btn, s[k]);
+}
+
+function get() { return JSON.parse(localStorage.getItem('inv_gym')||'{}'); }
+
+function applyBtn(btn, v) {
+  btn.textContent = v ? '✅ Inviato' : '○ Da inviare';
+  btn.classList.toggle('sent', v);
+  btn.closest('tr').classList.toggle('sent-row', v);
+}
+
+window.onload = function() {
+  var s = get();
+  document.querySelectorAll('.inv-btn').forEach(b => { if(s[b.dataset.key]) applyBtn(b,true); });
+  var saved = localStorage.getItem('dash_gym_tab');
+  if (saved) {
+    var btn = document.querySelector('.tab-btn[onclick*="\'' + saved + '\'"]');
+    if (btn) showTab(saved, btn);
+  } else {
+    document.querySelectorAll('.tab-row.pt').forEach(r => r.classList.add('hidden'));
+  }
+};
+</script>
+</body></html>
